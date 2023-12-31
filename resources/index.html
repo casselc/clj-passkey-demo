@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clojure Passkey Demo</title>
+
+    <script type="importmap">
+        {"imports": {
+            "squint-cljs/core.js": "https://unpkg.com/squint-cljs@0.5.86/core.js",
+            "@github/webauthn-json/browser-ponyfill": "https://unpkg.com/@github/webauthn-json@2.1.1/dist/esm/webauthn-json.browser-ponyfill.js?module" }}
+    </script>
+</head>
+
+<body>
+    <main>
+        <h1>Clojure Passkey Demo</h1>
+        <form>
+            <label>
+                Username:
+                <input inputmode="text" type="text" id="username" required/>
+            </label>
+            <label>
+                Display name:
+                <input inputmode="text" type="text" id="displayName" />
+            </label>
+            <label>
+                Credential nickname:
+                <input inputmode="text" type="text" id="credentialNickname" />
+            </label>
+
+            <button type="button" id="register">Create account with Passkey</button>
+            <button type="button" id="authenticate">Authenticate with Passkey</button>
+            <button type="button" id="logout">Logout</button>
+        </form>
+        <details id="status" open>
+            <summary id="statusText">Not logged in</summary>
+        </details>
+    </main>
+    <script type="module" src="public/app.mjs"></script>
+</body>
+
+</html>

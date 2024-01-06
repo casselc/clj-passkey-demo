@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Clojure+ClojureScript Passkey Demo Application">
+    <meta name="keywords" content="Clojure, ClojureScript, WebAuth, Passkey">
+    <meta name="author" content="Chuck Cassel">
+    <title>Clojure Passkey Demo</title>
+    <link rel="stylesheet" href="base.css">
+    <script async blocking="render" type="module" src="app.cljs"></script>
+</head>
+
+<template>
+
+</template>
+
+<body class="page">
+    <header class="sidebar">
+        <a class="logo" ahref="/">
+            <svg focusable="false" width="75%" viewBox="0 0 384 256" version="1.1">
+                <path id="outer-top-right"
+                    d="m 256.122,12.541 c -38.744,0 -73.016,19.073 -94.008,48.318 10.925,-6.842 22.08,-9.31 31.815,-9.222 13.446,0.039 24.017,4.208 29.089,7.06 1.225,0.706 2.388,1.466 3.527,2.247 9.05,-3.986 19.05,-6.215 29.574,-6.215 40.589,0.005 73.493,32.899 73.499,73.488 l -0.006,0 c 0,20.464 -8.37,38.967 -21.863,52.291 3.312,0.371 6.844,0.602 10.451,0.584 12.811,0.006 26.658,-2.821 37.039,-11.552 6.769,-5.702 12.44,-14.051 15.585,-26.569 0.615,-4.835 0.969,-9.75 0.969,-14.752 0,-63.882 -51.786,-115.678 -115.671,-115.678"
+                    style="fill:#5881d8" />
+                <path id="inner-right"
+                    d="m 287.658,175.953 c 0.714,0.354 2.333,0.932 4.586,1.571 15.157,-11.127 25.007,-29.05 25.046,-49.307 l -0.006,0 c -0.057,-33.771 -27.386,-61.096 -61.165,-61.163 -6.714,0.013 -13.164,1.121 -19.203,3.122 12.419,14.156 18.391,34.386 24.168,56.515 0.003,0.01 0.008,0.018 0.01,0.026 0.011,0.018 1.848,6.145 5.002,14.274 3.132,8.118 7.594,18.168 12.46,25.492 3.195,4.908 6.709,8.435 9.102,9.47"
+                    style="fill:#90b4fe" />
+                <path id="inner-left"
+                    d="m 220.97,78.225 c -15.699,11.064 -25.972,29.312 -26.011,49.992 0.039,20.371 10.003,38.383 25.307,49.493 3.754,-15.637 13.164,-29.955 27.275,-58.655 -0.838,-2.302 -1.793,-4.822 -2.862,-7.469 -3.909,-9.806 -9.551,-21.194 -14.586,-26.351 -2.567,-2.694 -5.682,-5.022 -9.123,-7.01"
+                    style="fill:#91dc47" />
+                <path id="inner-bottom"
+                    d="m 251.318,130.303 c -1.15,2.492 -2.419,5.292 -3.733,8.272 -4.645,10.524 -9.789,23.33 -11.668,31.534 -0.675,2.922 -1.093,6.543 -1.085,10.558 0,1.588 0.085,3.257 0.22,4.957 6.567,2.413 13.66,3.74 21.067,3.753 6.743,-0.013 13.221,-1.127 19.284,-3.143 -1.425,-1.303 -2.785,-2.692 -4.023,-4.257 -8.22,-10.482 -12.806,-25.844 -20.062,-51.674"
+                    style="fill:#91dc47" />
+                <path id="keyhole"
+                    d="m 0,0 a 2.6574323,2.6574323 0 1 0 -3.957555,2.31737 l -1.357213,6.93592 h 5.314768 l -1.357215,-6.93592 a 2.6558066,2.6558066 0 0 0 1.357215,-2.31737 z"
+                    style="fill:#f18805" transform="scale(7 8) translate(38.5 12)" />
+                <path id="outer-bottom-left"
+                    d="m 309.394,198.367 c -8.1,-1.015 -14.785,-2.24 -20.633,-4.303 -9.836,4.884 -20.913,7.643 -32.642,7.643 -40.584,0 -73.483,-32.894 -73.488,-73.49 0,-22.027 9.704,-41.773 25.056,-55.24 -4.106,-0.992 -8.388,-1.571 -12.762,-1.563 -21.562,0.203 -44.323,12.136 -53.799,44.363 -0.886,4.691 -0.675,8.238 -0.675,12.442 0,63.885 51.791,115.676 115.671,115.676 39.122,0 73.682,-19.439 94.611,-49.169 -11.32,2.821 -22.206,4.17 -31.528,4.199 -3.494,0 -6.774,-0.187 -9.811,-0.558"
+                    style="fill:#63b132" />
+                <path id="key"
+                    d="M 49.201394,0 H 25.478063 c -0.839652,-4.58079 -5.060291,-7.98243 -9.948062,-7.46889 -4.316271,0.4532 -7.7131327,3.94752 -8.1111545,8.26924 -0.5028351,5.46061 3.7673415,10.0675 9.0850755,10.0675 4.464788,0 8.190529,-3.2472 8.973759,-7.52043 h 15.725978 v 3.44276 h 3.347133 v -3.44305 h 2.964603 v 5.06852 h 3.347134 v -8.41565 z m -32.726257,7.49863 a 5.803546,5.803546 0 1 1 5.803546,-5.80345 5.810049,5.810049 0 0 1 -5.803546,5.80345 z"
+                    style="fill:#f18805" transform="scale(4) translate(1 27)" />
+            </svg>
+            <span class="vh">Clojure Passkey Demo</span>
+        </a>
+
+        <section id="auth-controls">
+            <input type="radio" id="register-choice" name="action" value="register" class="vh" checked>
+            <input type="radio" id="sign-in-choice" name="action" value="authenticate" class="vh">
+            <nav role="tablist" class="switcher">
+                <label for="register-choice" aria-controls="register-form" role="tab" aria-selected="true">
+                    <span>Register</span>
+                </label>
+                <label for="sign-in-choice" aria-controls="sign-in-form" role="tab" aria-selected="false">
+                    <span>
+                        Sign in
+                    </span>
+                </label>
+            </nav>
+            <section>
+                <form id="register-form" role="tabpanel" aria-labelledby="register-choice" hidden aria-hidden="false">
+                    <fieldset>
+                        <legend hidden aria-hidden="false">Register a passkey to user</legend>
+                        <label>
+                            Username
+                            <small>Desired account username</small>
+                            <input inputmode="text" type="text" id="reg-username" required
+                                placeholder="yourname_istaken" />
+                        </label>
+                        <label>
+                            Display Name
+                            <small>Publicly displayed name</small>
+                            <input inputmode="text" type="text" id="displayName"
+                                placeholder="Nothing obscene, please" />
+                        </label>
+                        <label>
+                            Credential Nickname
+                            <small>Name for this credential</small>
+                            <input inputmode="text" type="text" id="credentialNickname"
+                                placeholder="Passkey for this.site" />
+                        </label>
+                    </fieldset>
+                </form>
+                <form id="sign-in-form" role="tabpanel" aria-labelledby="sign-in-choice" hidden aria-hidden="false">
+                    <fieldset>
+                        <legend hidden aria-hidden="false">Sign in as user with a passkey</legend>
+                        <label>
+                            Username
+                            <small>Previously registered username</small>
+                            <input inputmode="text" type="text" id="auth-username" required
+                                placeholder="your_username" />
+                        </label>
+                    </fieldset>
+                </form>
+            </section>
+            <footer>
+                <button form="register-form" type="submit" id="register" hidden aria-hidden="false">Register a
+                    new
+                    Passkey</button>
+                <button form="sign-in-form" type="submit" id="authenticate" hidden aria-hidden="false">Sign in
+                    with
+                    Passkey</button>
+            </footer>
+        </section>
+        <section id="auth-details">
+            <details>
+                <summary id="session">Not signed in</summary>
+                <dl>
+                    <dt>Status</dt>
+                    <dd id="status"></dd>
+                    <dt>Device Nickname</dt>
+                    <dd>
+                        <span id="device-nickname"></span>
+                        <img id="device-icon">
+                    </dd>
+                    <dt>Device Name</dt>
+                    <dd id="device-name"></dd>
+                    <dt>Device Info</dt>
+                    <dd id="device-info"></dd>
+                </dl>
+            </details>
+            <button id="logout" type="button" hidden>Logout</button>
+        </section>
+        <section id="credential-pane" hidden>
+            <details>
+                <summary>Registered Credentials</summary>
+                <ul id="credentials"></ul>
+            </details>
+        </section>
+    </header>
+    <main class="content">
+        <article id="app-content">
+            <section id="debug-info">
+                <div id="messages-pane">
+                    <details open>
+                        <summary><strong>Messages</strong></summary>
+                        <ul id="messages"></ul>
+                    </details>
+                </div>
+                <div id="request-pane">
+                    <details open>
+                        <summary><strong>Request</strong></summary>
+                        <ul id="request"></ul>
+                    </details>
+                </div>
+                <div id="authenticator-pane">
+                    <details open>
+                        <summary><strong>Authenticator Response</strong></summary>
+                        <pre id="authenticator-response"></pre>
+                    </details>
+                </div>
+                <div id="server-pane">
+                    <details open>
+                        <summary><strong>Server Response</strong></summary>
+                        <pre id="server-response"></pre>
+                    </details>
+                </div>
+            </section>
+        </article>
+    </main>
+</body>
+
+</html>

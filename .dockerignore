@@ -4,5 +4,9 @@
 # Include Clojure code and config
 !deps.edn
 !build.clj
+!package.json
+!bun.lockb
+!cljs-build/
+!public/
 !src/
 !resources/

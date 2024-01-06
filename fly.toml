@@ -6,7 +6,8 @@
 app = "clj-passkey-demo"
 primary_region = "ewr"
 
-[build]
+[env]
+  RP_ID = "clj-passkey-demo.fly.dev"
 
 [http_service]
   internal_port = 8090
@@ -30,7 +31,7 @@ primary_region = "ewr"
 
 [[statics]]
   guest_path = "/opt/public"
-  url_prefix = "/public
+  url_prefix = "/public"
 
 [[vm]]
   cpu_kind = "shared"

@@ -39,9 +39,9 @@
 (defn uber "Build an uberjar"  [opts]
   (b/delete {:path "target"})
   (let [opts (uber-opts opts)]
-    (cljs opts)
+    #_(cljs opts)
     (println "\nCopying source...") 
-    (b/copy-dir {:src-dirs ["target/js" "resources" "src"] :target-dir class-dir})
+    (b/copy-dir {:src-dirs [#_"target/js" "resources" "src"] :target-dir class-dir})
     (println (str "\nCompiling " main "..."))
     (b/compile-clj opts)
     (println "\nBuilding JAR...")

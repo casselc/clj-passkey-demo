@@ -1,0 +1,306 @@
+:root {
+    --font-plain: Helvetica Neue, Helvetica, Arial, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-special: Helvetica, sans-serif;
+    --font-mono: Menlo, Courier, Courier New, Andale Mono, monospace;
+    --color-dark: #050505;
+    --color-darkish: #404040;
+    --color-lightish: #e6e6e6;
+    --color-light: #fafafa;
+    --color-mid: grey;
+    --ratio: 1.4;
+    --s-5: clamp(0.33rem, 0.39rem + -0.29vw, 0.18rem);
+    --s-4: clamp(0.41rem, 0.47rem + -0.31vw, 0.25rem);
+    --s-3: clamp(0.51rem, 0.57rem + -0.31vw, 0.35rem);
+    --s-2: clamp(0.64rem, 0.69rem + -0.27vw, 0.5rem);
+    --s-1: clamp(0.8rem, 0.84rem + -0.18vw, 0.71rem);
+    --s0: clamp(1rem, 1rem + 0vw, 1rem);
+    --s1: clamp(1.25rem, 1.19rem + 0.32vw, 1.41rem);
+    --s2: clamp(1.56rem, 1.39rem + 0.85vw, 2rem);
+    --s3: clamp(1.95rem, 1.61rem + 1.7vw, 2.83rem);
+    --s4: clamp(2.44rem, 1.83rem + 3.04vw, 4rem);
+    --s5: clamp(3.05rem, 2.04rem + 5.07vw, 5.65rem);
+    --measure: 65ch;
+    --line-height: var(--ratio);
+    --line-height-small: calc(0.8*var(--ratio));
+    --border-thin: var(--s-5);
+    --border-thick: var(--s-2);
+    line-height: var(--ratio);
+    font-size: calc(.333vw + 1em);
+    font-family: var(--font-plain);
+    background-color: var(--color-light);
+    color: var(--color-dark)
+}
+
+*,
+:after,
+:before {
+    box-sizing: border-box;
+    background-color: inherit;
+    font-family: inherit;
+    color: inherit;
+    overflow-wrap: break-word;
+    margin: 0;
+    padding: 0;
+    border: 0 solid
+}
+
+[aria-current=true] noscript {
+    padding: var(--s-1);
+    background-color: var(--color-lightish)
+}
+
+[hidden] {
+    display: none
+}
+
+[hidden]+* {
+    margin-top: 0 !important
+}
+
+:focus {
+    outline: var(--border-thin) solid var(--color-mid);
+    outline-offset: var(--border-thin)
+}
+
+footer,
+header,
+main,
+nav {
+    display: block
+}
+
+button {
+    font-size: inherit;
+    font-weight: 700;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 1.1;
+    font-family: var(--font-special);
+    color: var(--color-light);
+    background-color: var(--color-dark);
+    padding: .5em 1.5em .7em;
+    border-width: var(--border-thin);
+    border-color: var(--color-dark);
+}
+
+img {
+    width: 100%
+}
+
+kbd {
+    line-height: 1;
+    font-size: var(--s-1);
+    color: var(--color-light);
+    background-color: var(--color-dark);
+    padding: .125em .5em;
+    border-radius: .125em
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+table code {
+    white-space: nowrap
+}
+
+td,
+th {
+    border-width: var(--border-thin);
+    padding: var(--s-1);
+    text-align: left
+}
+
+td:first-child,
+th {
+    font-weight: 700
+}
+
+main {
+    line-height: 1.5
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: var(--line-height-small);
+    font-family: var(--font-special);
+    font-weight: 700;
+    hyphens: auto
+}
+
+.h1,
+h1 {
+    font-size: var(--s4)
+}
+
+.h2,
+h2 {
+    font-size: var(--s3)
+}
+
+.h3,
+h3 {
+    font-size: var(--s2)
+}
+
+.h4,
+h4 {
+    font-size: var(--s1)
+}
+
+hr {
+    padding: var(--border-thin) 0 0;
+    border-left-width: 0;
+    border-bottom-width: var(--border-thin);
+    border-right-width: 0;
+    border-top-width: var(--border-thin)
+}
+
+button,
+pre {
+    outline: var(--border-thin) solid transparent;
+    outline-offset: calc(var(--border-thin)*-1)
+}
+
+label {
+    font-weight: 700;
+    font-family: var(--font-mono)
+}
+
+label,
+label small {
+    display: block
+}
+
+label small {
+    font-weight: 400;
+    font-style: italic
+}
+
+.vh {
+    clip-path: inset(100%) !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    white-space: nowrap !important;
+    width: 1px !important
+}
+
+.card-container,
+[type=checkbox]~svg,
+input,
+textarea {
+    box-shadow: inset .25rem .25rem 0 #ddd
+}
+
+.card-container,
+[type=email],
+[type=text],
+textarea {
+    width: 100%;
+    font-size: inherit;
+    font-family: var(--font-mono);
+    border-width: var(--border-thin);
+    border-radius: 0;
+    padding: var(--s-1)
+}
+
+[type=checkbox]~svg {
+    stroke: transparent;
+    border-width: var(--border-thin);
+    vertical-align: middle;
+    padding: 2px;
+    box-sizing: content-box
+}
+
+[type=checkbox]:checked~svg {
+    stroke: currentColor
+}
+
+[type=checkbox]:focus~svg {
+    outline: var(--border-thin) solid var(--color-mid)
+}
+
+input:focus,
+textarea:focus {
+    outline-offset: 0
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sidebar,
+.content {
+    padding: var(--s2);
+}
+
+.sidebar>*+*,
+.content>*+*,
+#auth-controls>*+* {
+    margin-top: var(--s1);
+}
+
+.sidebar {
+    flex-basis: 20rem;
+    flex-grow: 1;
+    position: relative;
+    padding-top: var(--s3);
+}
+
+.content {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-width: 66%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+}
+
+.switcher {
+    font-family: var(--font-mono);
+    color: var(--color-dark);
+    display: flex;
+    text-align: center
+}
+
+.switcher>* {
+    flex-basis: 50%;
+    padding: var(--s-3);
+    display: block;
+    background-color: var(--color-lightish);
+    color: var(--color-dark)
+}
+
+#auth-controls fieldset>label+label {
+    margin-top: var(--s1);
+}
+
+/* Toggle switcher button colors and styles based on selection/focus */
+#auth-controls>input:first-child:checked~.switcher>label:first-child,
+#auth-controls>input:nth-child(2):checked~.switcher>label:nth-child(2) {
+    filter: invert(100%);
+}
+
+#auth-controls>input:first-child:focus~.switcher>label:first-child,
+#auth-controls>input:nth-child(2):focus~.switcher>label:nth-child(2) {
+    outline: var(--border-thin) solid var(--color-mid);
+    outline-offset: calc(var(--border-thin)*-1);
+}
+
+/* Show/hide appropriate forms and button based on radio button selection */
+#auth-controls>input:first-child:checked~section>form:first-child,
+#auth-controls>input:nth-child(2):checked~section>form:nth-child(2) {
+    display: block;
+}
+
+#auth-controls>input:first-child:checked~footer>button:first-child,
+#auth-controls>input:nth-child(2):checked~footer>button:nth-child(2) {
+    display: inline-block;
+}

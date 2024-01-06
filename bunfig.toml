@@ -1,0 +1,1 @@
+preload = ["./cljs-build/squintPlugin.js", "./cljs-build/htmlPlugin.js"]

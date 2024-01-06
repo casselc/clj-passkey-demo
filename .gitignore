@@ -27,3 +27,6 @@
 /classes
 /target
 *.mjs
+node_modules
+dist
+log

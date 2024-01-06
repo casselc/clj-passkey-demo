@@ -1,4 +1,4 @@
-import html from './htmlPlugin.js';
+import html, { defaultHtmlOptions } from './htmlPlugin.js';
 import { squintLoader } from "./squintPlugin.js";
 
 const result = await Bun.build({
@@ -9,10 +9,10 @@ const result = await Bun.build({
     html({
       build: ['.cljs'],
       inline: true,
-      plugins: [squintLoader],
+      minify: false,
+      htmlOptions: { ...defaultHtmlOptions, removeRedundantAttributes: false },
+      plugins: [squintLoader]
     })
   ],
   minify: true,
 });
-
-console.log("Build complete", result);

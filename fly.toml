@@ -8,6 +8,7 @@ primary_region = "ewr"
 
 [env]
   RP_ID = "clj-passkey-demo.fly.dev"
+  HOST = "0.0.0.0"
 
 [http_service]
   internal_port = 8090

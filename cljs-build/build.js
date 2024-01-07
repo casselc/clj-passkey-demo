@@ -1,4 +1,4 @@
-import html, { defaultHtmlOptions } from './htmlPlugin.js';
+import html, { defaultMinifyOptions } from './htmlPlugin.js';
 import { squintLoader } from "./squintPlugin.js";
 
 const result = await Bun.build({
@@ -7,10 +7,14 @@ const result = await Bun.build({
   sourcemap: "external",
   plugins: [
     html({
-      build: ['.cljs'],
+      includeExtension: ['.cljs'],
       inline: true,
-      minify: false,
-      htmlOptions: { ...defaultHtmlOptions, removeRedundantAttributes: false },
+      minifyOptions: {
+        ...defaultMinifyOptions,
+        removeRedundantAttributes: false,
+        sortAttributes: true,
+        sortClassName: true
+      },
       plugins: [squintLoader]
     })
   ],

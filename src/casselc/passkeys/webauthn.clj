@@ -60,11 +60,8 @@
     (log/info "Finishing registration from response:" json)
     (try
       (let [{:strs [requestId credential] :as response} (some-> json json/read-json)
-            _ (log/info "Parsed response:" response)
             request-id (some-> requestId ByteArray/fromBase64Url)
-            _ (log/info "Parsed request-id:" request-id)
-            {:keys [username nickname sessionId ^PublicKeyCredentialCreationOptions options] :as request} (some->> request-id (c/lookup pending-registrations))
-            _ (log/info "Cached request:" request)]
+            {:keys [username nickname sessionId ^PublicKeyCredentialCreationOptions options] :as request} (some->> request-id (c/lookup pending-registrations))]
         (c/evict pending-registrations request-id)
         (if request
           (try
@@ -74,7 +71,6 @@
                   user-handle (some-> user .getId)]
               (when (and (i/user-exists? credentials username)
                          (not (s/session-for-user? sessions sessionId user-handle)))
-                (log/info "User already exists")
                 (throw (ex-info "User already exists" {:username username} ::registration-failed)))
               (let [registered (store-registered-credential! user nickname registration)]
                 {:success (d/->SuccessfulRegistrationResult request response registered (.isAttestationTrusted registration) (s/create-session sessions user-handle))}))
@@ -115,11 +111,8 @@
     (log/info "Finishing authentication from response:" json)
     (try
       (let [{:strs [requestId credential] :as response} (some-> json json/read-json)
-            _ (log/info "Parsed response:" response)
             request-id (some-> requestId ByteArray/fromBase64Url)
-            _ (log/info "Parsed request-id:" request-id)
-            {:keys [username ^AssertionRequest request] :as cached-request} (some->> request-id (c/lookup pending-assertions))
-            _ (log/info "Cached request:" cached-request)]
+            {:keys [username ^AssertionRequest request] :as cached-request} (some->> request-id (c/lookup pending-assertions))]
         (c/evict pending-assertions request-id)
         (if cached-request
           (try
@@ -149,7 +142,6 @@
 
 (defn make-relying-party
   [& {:keys [rp-name rp-id]}]
-  
   (let [rp-identity (i/->RelyingPartyIdentity rp-id rp-name)
         credentials (i/->in-memory-credential-store)
         state {::relying-party (i/->RelyingParty rp-identity credentials)

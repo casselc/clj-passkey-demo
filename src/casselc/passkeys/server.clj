@@ -19,9 +19,8 @@
 
 (defn- make-relying-party-router
   [& {:keys [start-registration finish-registration start-assertion finish-assertion] :as config}]
-  (log/info "Creating new RP router with:" config)
   (fn [{:keys [uri request-method] :as req}]
-    (log/info "Routing" req)
+    (log/trace "Routing" request-method uri)
     (try
       (case [request-method uri]
         ([:get "/"]
@@ -46,8 +45,8 @@
       start (fn [{:keys [host port] :as config}]
               (let [rp (make-relying-party config)
                     router (make-relying-party-router rp)
-                    s (http/run-server router (assoc start-opts :port port))]
-                (log/info "Started server with:" config s)
+                    s (http/run-server router (assoc start-opts :ip host :port port))]
+                (log/info "Started server on" host ":" port)
                 (reset! server s)))]
   (defn start-server!
     [config]

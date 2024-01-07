@@ -1,10 +1,10 @@
-(ns casselc.passkey-demo.interop
+(ns casselc.passkeys.interop
   (:require
    [clojure.set :as set]
    [clojure.tools.logging.readable :as log]
    [charred.api :as json]
    [clojure.java.data :as j]
-   [casselc.passkey-demo.util :refer [random-bytes]])
+   [casselc.passkeys.util :refer [random-bytes]])
   (:import
    (com.yubico.webauthn CredentialRepositoryV2 FinishRegistrationOptions FinishAssertionOptions AssertionRequest
                         RegisteredCredential RelyingParty  RelyingPartyV2 AssertionResultV2
@@ -220,7 +220,7 @@
          (let [{:keys [^UserIdentity user ^RegisteredCredential credential]} (.getCredential ^AssertionResultV2 assertion-result)
                username (.getName user)
                credential-id (.getCredentialId credential)
-               {stored-cred :credential :as stored-reg} (credential-for-username-with-id this username credential-id)]
+               {^RegisteredCredential stored-cred :credential :as stored-reg} (credential-for-username-with-id this username credential-id)]
            (log/trace "Updating signature count for:" stored-reg)
            (if stored-reg
              (swap! store update-in [::user-registrations username] (fn [regs]

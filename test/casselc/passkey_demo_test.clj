@@ -1,6 +1,6 @@
-(ns casselc.passkey-demo-test
+(ns casselc.passkeys-test
   (:require [clojure.test :refer :all]
-            [casselc.passkey-demo :refer :all]))
+            [casselc.passkeys :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

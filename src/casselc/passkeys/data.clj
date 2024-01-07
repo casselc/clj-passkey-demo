@@ -1,4 +1,4 @@
-(ns casselc.passkey-demo.data
+(ns casselc.passkeys.data
   (:import
    (com.yubico.webauthn AssertionRequest CredentialRecord RegisteredCredential RegistrationResult ToPublicKeyCredentialDescriptor )
    (com.yubico.webauthn.data ByteArray PublicKeyCredential PublicKeyCredentialDescriptor PublicKeyCredentialCreationOptions PublicKeyCredentialRequestOptions UserIdentity   )

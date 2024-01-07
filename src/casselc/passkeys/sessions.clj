@@ -1,8 +1,8 @@
-(ns casselc.passkey-demo.sessions
+(ns casselc.passkeys.sessions
   (:require 
    [clojure.tools.logging.readable :as log]
    [clojure.core.cache.wrapped :as c]
-   [casselc.passkey-demo.util :refer [random-bytes new-cache]])
+   [casselc.passkeys.util :refer [random-bytes new-cache]])
   (:import
    (com.yubico.webauthn.data ByteArray)))
 

@@ -31,7 +31,7 @@ primary_region = "ewr"
 
 [[statics]]
   guest_path = "/opt/public"
-  url_prefix = "/public"
+  url_prefix = "/"
 
 [[vm]]
   cpu_kind = "shared"

@@ -46,7 +46,7 @@
               (let [rp (make-relying-party config)
                     router (make-relying-party-router rp)
                     s (http/run-server router (assoc start-opts :port port))]
-                (log/info "Started server on" host ":" port)
+                (log/info "Started server:" (http/server-status s))
                 (reset! server s)))]
   (defn start-server!
     [config]

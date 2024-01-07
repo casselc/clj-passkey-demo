@@ -274,3 +274,5 @@
   (set! (. authenticate-form -onsubmit) authenticate)
   #_(set! (. deregister-button -onclick) deregister)
   (set! (. logout-button -onclick) logout))
+
+(init)

@@ -10,12 +10,8 @@
     <title>Clojure Passkey Demo</title>
     <link rel="stylesheet" href="base.css">
     <link rel="icon" type="image/png" href="favicon.png">
-
+    <script async blocking="render" type="module" src="app.cljs"></script>
 </head>
-
-<template>
-
-</template>
 
 <body class="page">
     <header class="sidebar">
@@ -45,7 +41,6 @@
             </svg>
             <span class="vh">Clojure Passkey Demo</span>
         </a>
-
         <section id="auth-controls">
             <input type="radio" id="register-choice" name="action" value="register" class="vh" checked>
             <input type="radio" id="sign-in-choice" name="action" value="authenticate" class="vh">
@@ -160,7 +155,6 @@
             </section>
         </article>
     </main>
-    <script async blocking="render" type="module" src="app.cljs"></script>
 </body>
 
 </html>

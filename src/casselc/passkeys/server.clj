@@ -41,7 +41,8 @@
 (let [start-opts {:server-header "Clojure Passkey Demo"
                   :warn-logger #(log/warn %2 %1)
                   :error-logger #(log/error %2 %1)
-                  :event-logger #(log/trace %)}
+                  :event-logger #(log/trace %)
+                  :legacy-return-value? false}
       start (fn [{:keys [host port] :as config}]
               (let [rp (make-relying-party config)
                     router (make-relying-party-router rp)

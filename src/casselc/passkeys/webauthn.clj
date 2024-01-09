@@ -40,8 +40,7 @@
       {:error [(str username " is already in use. Please try another username.")]})))
 
 (defn- store-registered-credential!
-  [& {:keys [credentials]
-      {:keys [^UserIdentity user ^String nickname ^RegistrationResult result]} :credential}]
+  [credentials & {:keys [^UserIdentity user ^String nickname ^RegistrationResult result]}]
   (log/info "Adding registration for user:" user "nickname:" nickname "result:" result)
   (let [reg (->CredentialRegistration user
                                       nickname
@@ -72,7 +71,9 @@
               (when (and (i/user-exists? credentials username)
                          (not (s/session-for-user? sessions sessionId user-handle)))
                 (throw (ex-info "User already exists" {:username username} ::registration-failed)))
-              (let [registered (store-registered-credential! user nickname registration)]
+              (let [registered (store-registered-credential! credentials  {:user user
+                                                                           :nickname nickname
+                                                                           :result registration})]
                 {:success (d/->SuccessfulRegistrationResult request response registered (.isAttestationTrusted registration) (s/create-session sessions user-handle))}))
             (catch clojure.lang.ExceptionInfo e
               (log/debug e "Registration failed with JSON:" json)
@@ -145,6 +146,7 @@
   (let [rp-identity (i/->RelyingPartyIdentity rp-id rp-name)
         credentials (i/->in-memory-credential-store)
         state {::relying-party (i/->RelyingParty rp-identity credentials)
+               ::credentials credentials
                ::sessions  (s/->in-memory-session-manager :session-ttl-minutes 10)
                ::pending-registrations (u/new-cache :threshold 100 :ttl-ms (* 3 60 1000))
                ::pending-assertions (u/new-cache :threshold 100 :ttl-ms (* 3 60 1000))}

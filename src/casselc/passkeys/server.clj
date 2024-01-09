@@ -13,27 +13,36 @@
        (some-> (str "./public/" path) io/input-stream (u/success content-type))
        u/gone))
 
-(defonce ^:private index-content (static-content "index.html" "text/html"))
-(defonce ^:private app-content (static-content "app.js" "application/javascript"))
-(defonce ^:private css-content (static-content "base.css" "text/css"))
+(defonce ^:private public-resources
+  {"index.html" (static-content "index.html" "text/html")
+   "app.js" (static-content "app.js" "application/javascript")
+   "base.css" (static-content "base.css" "text/css")
+   "favicon.png" (static-content "favicon.png" "image/png")})
 
 (defn- make-relying-party-router
   [& {:keys [start-registration finish-registration start-assertion finish-assertion] :as config}]
   (fn [{:keys [uri request-method] :as req}]
     (log/info "Routing" request-method uri)
     (try
-      (case [request-method uri]
-        ([:get "/"]
-         [:get "/index.html"]) (index-content)
-        [:get "/app.js"] (app-content)
-        [:get "/base.css"] (css-content)
-        [:post "/register"] (start-registration req)
-        [:post "/register/finish"] (finish-registration req)
-        [:post "/authenticate"] (start-assertion req)
-        [:post "/authenticate/finish"] (finish-assertion req)
-        [:get "/status"] (u/success (str "Clojure Version:" (clojure-version)))
-        u/gone)
+      (let [route (case [request-method uri]
+                    [:get "/"] (public-resources "index.html")
+                    [:post "/register"] (start-registration req)
+                    [:post "/register/finish"] (finish-registration req)
+                    [:post "/authenticate"] (start-assertion req)
+                    [:post "/authenticate/finish"] (finish-assertion req)
+                    [:get "/status"] (u/success (str "Clojure Version:" (clojure-version)))
+                    (if (= :get request-method)
+                      (public-resources (subs uri 1) u/gone)
+                      u/gone))
+            response (cond
+                       (map? route) route
+                       (fn? route) (route)
+                       :else (throw (ex-info (str "Invalid result from route lookup, expected map or fn, got:" (type route))
+                                             {::original-request req
+                                              ::routing-result route})))]
+        (log/spy :trace response))
       (catch Exception e
+        (log/error e "occurred when processing" req)
         (-> e ex-message u/error)))))
 
 (def ^:private server (atom nil))

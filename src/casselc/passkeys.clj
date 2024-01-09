@@ -25,3 +25,12 @@
     (catch Exception e
       (log/fatal e))
     (finally (log/info "Shutting down..."))))
+
+(comment (def s (start-server! {:rp-name "Passkey Demo"
+                                :rp-id "localhost"
+                                :host "localhost"
+                                :port 8090}))
+
+         (http/server-status s)
+
+         @(http/server-stop! s {:timeout 5000}))

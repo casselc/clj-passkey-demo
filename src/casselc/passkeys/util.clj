@@ -7,12 +7,14 @@
    (com.yubico.webauthn.data ByteArray)
    (java.security SecureRandom)))
 
+(set! *warn-on-reflection* true)
+
 (defonce ^:private random (delay (SecureRandom.)))
 
 (defn random-bytes
   ^ByteArray [n]
   (let [bs (byte-array n)]
-    (.nextBytes @random bs)
+    (.nextBytes ^SecureRandom @random bs)
     (ByteArray. bs)))
 
 (comment (random-bytes 32))

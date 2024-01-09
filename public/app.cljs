@@ -88,7 +88,7 @@
   [{:keys [nickname displayName imageUrl metadataStatement]}]
   (set! (. device-nickname -textContent) nickname)
   (set! (. device-name -textContent) (or  (:description metadataStatement) displayName))
-  (set! (. device-icon -src) (or (:icon metadataStatement) imageUrl)))
+  (set! (. device-icon -src) (or (:icon metadataStatement) imageUrl "")))
 
 (defn reset-displays!
   []
@@ -100,7 +100,7 @@
 
 (defn- update-session
   [{:keys [success sessionId request] :as resp}]
-  (println "Updating session with" resp)
+  (js/console.info "Updating session with" resp)
   (if-let [username (and success (:username request))]
     (do
       (assoc! session :username username)
@@ -136,7 +136,7 @@
                                  :submit "Submitting authenticator response to server..."
                                  :success "Ceremony finished successsfully!"
                                  :error "Ceremony failed."}}}]
-  (println (:start status-msgs))
+  (js/console.info (:start status-msgs))
   (reset-displays!)
   (set-status (:start status-msgs))
   (try
@@ -146,12 +146,12 @@
                                           (.then reject-unsuccessful)
                                           (.catch error-fn)))]
 
-      (println (:execute status-msgs) request)
+      (js/console.info (:execute status-msgs) request)
       (set-status (:execute status-msgs))
       (display-request request)
       (let [webauthn-resp (js-await (-> (execute-fn request)
                                         (.catch error-fn)))]
-        (println (:submit status-msgs) webauthn-resp)
+        (js/console.info (:submit status-msgs) webauthn-resp)
         (set-status (:submit status-msgs))
         (display-authenticator-response webauthn-resp)
         (let [{:keys [success] :as data} (js-await  (-> (js/fetch finish-url {:body (js/JSON.stringify {:requestId (:requestId request)
@@ -161,7 +161,7 @@
                                                         (.then extract-json)
                                                         (.then update-session)
                                                         (.catch error-fn)))]
-          (println data)
+          (js/console.info data)
           (if success
             (set-status (:success status-msgs))
             (set-status (:error status-msgs)))

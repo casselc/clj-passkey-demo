@@ -170,7 +170,7 @@
                    (throw (ex-info "Registration ceremony failed at step 10, expected `C.topOrigin` \\in `options.topOrigin`"
                                    {:top response-top
                                     :expected-top expected-top})))
-        ;;11. Let hash be the result of computing a hash over response.clientDataJSON using SHA-256.
+        ;; 11. Let hash be the result of computing a hash over response.clientDataJSON using SHA-256.
         sha256 (MessageDigest/getInstance "SHA256")
         client-data-hash (.digest sha256 client-data-bytes)
         ;; 12. Perform CBOR decoding on the attestationObject field of the 
